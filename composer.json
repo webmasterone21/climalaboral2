@@ -1,0 +1,223 @@
+{
+    "name": "herco/sistema-encuestas-clima-laboral",
+    "description": "Sistema completo para gestión de encuestas de clima laboral con análisis avanzado y reportes personalizables",
+    "type": "project",
+    "version": "1.0.0",
+    "license": "MIT",
+    "keywords": [
+        "encuestas",
+        "clima-laboral",
+        "rrhh",
+        "recursos-humanos", 
+        "analisis",
+        "reportes",
+        "php",
+        "mysql"
+    ],
+    "authors": [
+        {
+            "name": "HERCO Development Team",
+            "email": "desarrollo@herco.com",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/herco/sistema-encuestas",
+    "support": {
+        "email": "soporte@herco.com",
+        "docs": "https://docs.herco.com/encuestas"
+    },
+    "require": {
+        "php": ">=8.1.0",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-curl": "*",
+        "ext-gd": "*",
+        "ext-zip": "*",
+        "ext-fileinfo": "*",
+        "tecnickcom/tcpdf": "^6.4",
+        "phpoffice/phpspreadsheet": "^1.29",
+        "phpmailer/phpmailer": "^6.8",
+        "monolog/monolog": "^3.0",
+        "ramsey/uuid": "^4.7",
+        "symfony/var-dumper": "^6.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "phpstan/phpstan": "^1.10",
+        "squizlabs/php_codesniffer": "^3.7",
+        "friendsofphp/php-cs-fixer": "^3.21",
+        "pestphp/pest": "^2.0",
+        "mockery/mockery": "^1.6",
+        "fakerphp/faker": "^1.23"
+    },
+    "suggest": {
+        "ext-redis": "Para caché Redis mejorado",
+        "ext-imagick": "Para procesamiento avanzado de imágenes",
+        "ext-intl": "Para soporte de internacionalización",
+        "symfony/console": "Para comandos CLI adicionales",
+        "vlucas/phpdotenv": "Para gestión de variables de entorno"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "App\\Controllers\\": "controllers/",
+            "App\\Models\\": "models/",
+            "App\\Core\\": "core/",
+            "App\\Services\\": "services/",
+            "App\\Utils\\": "utils/",
+            "App\\Middleware\\": "middleware/"
+        },
+        "files": [
+            "config/app.php",
+            "core/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Tests\\Unit\\": "tests/unit/",
+            "Tests\\Integration\\": "tests/integration/",
+            "Tests\\Feature\\": "tests/feature/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@create-directories",
+            "@set-permissions"
+        ],
+        "post-update-cmd": [
+            "@create-directories",
+            "@optimize"
+        ],
+        "create-directories": [
+            "mkdir -p uploads/logos uploads/documents uploads/exports",
+            "mkdir -p backups logs/system logs/activity logs/errors",
+            "mkdir -p cache/views cache/data cache/sessions"
+        ],
+        "set-permissions": [
+            "chmod -R 755 uploads/ backups/ logs/ cache/",
+            "chmod -R 644 config/"
+        ],
+        "optimize": [
+            "@composer dump-autoload --optimize --no-dev --classmap-authoritative"
+        ],
+        "test": [
+            "vendor/bin/phpunit --configuration phpunit.xml"
+        ],
+        "test-coverage": [
+            "vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage/"
+        ],
+        "analyse": [
+            "vendor/bin/phpstan analyse --memory-limit=2G"
+        ],
+        "cs-check": [
+            "vendor/bin/phpcs --standard=PSR12 --colors -p src/ controllers/ models/ core/"
+        ],
+        "cs-fix": [
+            "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --verbose --diff"
+        ],
+        "security-check": [
+            "@composer audit"
+        ],
+        "install-dev": [
+            "@composer install --dev",
+            "@create-directories",
+            "@set-permissions"
+        ],
+        "build-production": [
+            "@composer install --no-dev --optimize-autoloader",
+            "@optimize",
+            "php scripts/cache-config.php",
+            "php scripts/optimize-assets.php"
+        ],
+        "backup-db": [
+            "php scripts/backup-database.php"
+        ],
+        "migrate": [
+            "php scripts/migrate-database.php"
+        ],
+        "seed": [
+            "php scripts/seed-database.php"
+        ],
+        "serve": [
+            "php -S localhost:8000 -t public/"
+        ],
+        "clear-cache": [
+            "rm -rf cache/views/* cache/data/* cache/sessions/*"
+        ],
+        "check-requirements": [
+            "php scripts/check-requirements.php"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Ejecutar suite de pruebas completa",
+        "test-coverage": "Ejecutar pruebas con reporte de cobertura",
+        "analyse": "Análisis estático de código con PHPStan",
+        "cs-check": "Verificar estándares de código",
+        "cs-fix": "Corregir automáticamente estándares de código",
+        "security-check": "Verificar vulnerabilidades de seguridad",
+        "build-production": "Preparar aplicación para producción",
+        "backup-db": "Crear respaldo manual de base de datos",
+        "serve": "Iniciar servidor de desarrollo",
+        "clear-cache": "Limpiar todos los archivos de caché"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "classmap-authoritative": false,
+        "prepend-autoloader": false,
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "platform": {
+            "php": "8.1.0"
+        },
+        "cache-dir": "vendor/cache",
+        "vendor-dir": "vendor"
+    },
+    "extra": {
+        "app": {
+            "name": "Sistema de Encuestas de Clima Laboral",
+            "version": "1.0.0",
+            "description": "Plataforma completa para evaluación de clima organizacional"
+        },
+        "database": {
+            "migrations": "database/migrations",
+            "seeders": "database/seeders",
+            "factories": "database/factories"
+        },
+        "installer-paths": {
+            "plugins/{$name}/": ["type:plugin"],
+            "themes/{$name}/": ["type:theme"]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "archive": {
+        "exclude": [
+            "/tests",
+            "/docs",
+            "/.github",
+            "/.git",
+            "/node_modules",
+            "/.env*",
+            "/phpunit.xml",
+            "/.phpunit.cache",
+            "/coverage",
+            "/install"
+        ]
+    }
+}

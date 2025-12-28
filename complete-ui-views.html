@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Encuestas - Vistas Completas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+/* Variables CSS */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --border-radius: 0.375rem;
+    --box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --transition: all 0.15s ease-in-out;
+}
+
+/* Layout principal */
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--light-color);
+}
+
+.sidebar {
+    width: 250px;
+    background: linear-gradient(135deg, var(--primary-color), #0056b3);
+    color: white;
+    transition: var(--transition);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar .logo {
+    padding: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    overflow-x: hidden;
+}
+
+.topbar {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: var(--box-shadow);
+}
+
+.content-wrapper {
+    padding: 1.5rem;
+}
+
+/* Dashboard Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    box-shadow: var(--box-shadow);
+    border: 1px solid #e9ecef;
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-right: 1rem;
+}
+
+.stat-content h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--dark-color);
+}
+
+.stat-content p {
+    margin: 0;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+/* Tarjetas */
+.card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid #e9ecef;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+    display: flex;
+    justify-content: between;
+    align-items: center;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* Constructor de preguntas */
+.question-builder {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.question-type-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.question-type-card {
+    border: 2px solid #e9ecef;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.question-type-card:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+.question-type-card.selected {
+    border-color: var(--primary-color);
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Formularios */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: white;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Progress bar */
+.progress {
+    height: 0.5rem;
+    background-color: #e9ecef;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+    transition: width 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar.show {
+        left: 0;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .content-wrapper {
+        padding: 1rem;
+    }
+}
+
+/* Vista previa de encuestas */
+.survey-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e9ecef;
+    transition: var(--transition);
+}
+
+.survey-card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--secondary-color);
+}
+
+.empty-state i {
+    color: var(--light-color);
+    margin-bottom: 1rem;
+}
+
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.badge-warning {
+    background-color: var(--warning-color);
+    color: var(--dark-color);
+}
+
+.badge-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <!-- LAYOUT PRINCIPAL DE ADMINISTRACIÓN -->
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo">
+                <h3><i class="fas fa-poll-h"></i> Encuestas</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a></li>
+                <li><a href="#surveys">
+                    <i class="fas fa-poll"></i> Encuestas
+                </a></li>
+                <li><a href="#companies">
+                    <i class="fas fa-building"></i> Empresas
+                </a></li>
+                <li><a href="#reports">
+                    <i class="fas fa-chart-bar"></i> Reportes
+                </a></li>
+                <li><a href="#backups">
+                    <i class="fas fa-database"></i> Respaldos
+                </a></li>
+                <li><a href="#users">
+                    <i class="fas fa-users"></i> Usuarios
+                </a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <button class="btn btn-link d-md-none" id="toggle-sidebar">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <h1 class="h4 mb-0">Dashboard</h1>
+                    </div>
+                    
+                    <div class="d-flex align-items-center">
+                        <span class="me-3">Bienvenido, <strong>Administrador</strong></span>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#profile"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                                <li><a class="dropdown-item" href="#settings"><i class="fas fa-cog"></i> Configuración</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Wrapper -->
+            <div class="content-wrapper">
+                <!-- DASHBOARD VIEW -->
+                <div id="dashboard-view">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-poll text-primary"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>15</h3>
+                                <p>Total Encuestas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-play text-success"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>3</h3>
+                                <p>Encuestas Activas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users text-info"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>247</h3>
+                                <p>Respuestas Recibidas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line text-warning"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>87%</h3>
+                                <p>Tasa de Completación</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Surveys -->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5><i class="fas fa-clock"></i> Encuestas Recientes</h5>
+                            <a href="#create-survey" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Nueva Encuesta
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="survey-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5>Encuesta de Clima Laboral HERCO 2024</h5>
+                                        <p class="text-muted">Evaluación completa del ambiente laboral</p>
+                                        <span class="badge badge-success">Activa</span>
+                                    </div>
+                                    <div class="text-end">
+                                        <small class="text-muted">Creada: 15/03/2024</small>
+                                        <br>
+                                        <small><strong>24/50 respuestas</strong></small>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 48%"></div>
+                                    </div>
+                                    <small class="text-muted">48% de participación</small>
+                                </div>
+                                <div class="mt-3">
+                                    <a href="#survey-1" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="#questions-1" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-question"></i> Preguntas
+                                    </a>
+                                    <a href="#report-1" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-chart-bar"></i> Reportes
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="survey-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5>Evaluación de Satisfacción Q1 2024</h5>
+                                        <p class="text-muted">Medición trimestral de satisfacción empleados</p>
+                                        <span class="badge badge-warning">Borrador</span>
+                                    </div>
+                                    <div class="text-end">
+                                        <small class="text-muted">Creada: 10/03/2024</small>
+                                        <br>
+                                        <small><strong>0/0 respuestas</strong></small>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 0%"></div>
+                                    </div>
+                                    <small class="text-muted">Sin activar</small>
+                                </div>
+                                <div class="mt-3">
+                                    <a href="#survey-2" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="#questions-2" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-question"></i> Preguntas
+                                    </a>
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-play"></i> Activar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CREAR ENCUESTA VIEW -->
+                <div id="create-survey-view" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-plus-circle"></i> Crear Nueva Encuesta</h2>
+                        <a href="#surveys" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Información Básica</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="create-survey-form">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="form-label">Título de la Encuesta *</label>
+                                            <input type="text" class="form-control" name="title" placeholder="Ej: Encuesta de Clima Laboral 2024" required>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="form-label">Descripción</label>
+                                            <textarea class="form-control" name="description" rows="3" placeholder="Describe el propósito de la encuesta..."></textarea>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Empresa</label>
+                                                    <select class="form-control" name="company_id" required>
+                                                        <option value="">Seleccionar empresa...</option>
+                                                        <option value="1">HERCO S. de R.L.</option>
+                                                        <option value="2">Empresa Demo</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Estado</label>
+                                                    <select class="form-control" name="status">
+                                                        <option value="draft">Borrador</option>
+                                                        <option value="active">Activa</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Fecha de Inicio</label>
+                                                    <input type="date" class="form-control" name="start_date">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Fecha de Fin</label>
+                                                    <input type="date" class="form-control" name="end_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Logo de la Encuesta</label>
+                                            <div class="border rounded p-3 text-center">
+                                                <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                                                <br>
+                                                <input type="file" class="form-control" name="logo" accept="image/*">
+                                                <small class="text-muted">Máximo 2MB</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <h5>Configuración Avanzada</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="allow_save_progress" checked>
+                                            <label class="form-check-label">
+                                                Permitir guardar progreso
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="anonymous" checked>
+                                            <label class="form-check-label">
+                                                Encuesta anónima
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="ip_control">
+                                            <label class="form-check-label">
+                                                Control por IP (una respuesta por IP)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Introducción de la Encuesta</label>
+                                    <textarea class="form-control" name="introduction" rows="3" placeholder="Texto de bienvenida que verán los participantes..."></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Instrucciones</label>
+                                    <textarea class="form-control" name="instructions" rows="2" placeholder="Instrucciones para completar la encuesta..."></textarea>
+                                </div>
+                                
+                                <div class="form-group text-end">
+                                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Crear Encuesta
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONSTRUCTOR DE PREGUNTAS VIEW -->
+                <div id="questions-view" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2>Constructor de Preguntas</h2>
+                            <p class="text-muted">Encuesta: Clima Laboral HERCO 2024</p>
+                        </div>
+                        <div>
+                            <a href="#surveys" class="btn btn-outline-secondary me-2">
+                                <i class="fas fa-arrow-left"></i> Volver
+                            </a>
+                            <button class="btn btn-success" id="add-question-btn">
+                                <i class="fas fa-plus"></i> Agregar Pregunta
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Panel de Categorías -->
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-layer-group"></i> Categorías</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="list-group list-group-flush">
+                                        <a href="#" class="list-group-item list-group-item-action active" data-category="1">
+                                            Satisfacción Laboral <span class="badge badge-secondary">3</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action" data-category="2">
+                                            Comunicación <span class="badge badge-secondary">2</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action" data-category="3">
+                                            Ambiente de Trabajo <span class="badge badge-secondary">4</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action" data-category="4">
+                                            Capacitación <span class="badge badge-secondary">2</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action" data-category="5">
+                                            Compensación <span class="badge badge-secondary">1</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel Principal de Preguntas -->
+                        <div class="col-md-9">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5><i class="fas fa-question-circle"></i> Preguntas - Satisfacción Laboral</h5>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-primary active">
+                                            <i class="fas fa-list"></i> Lista
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-th-large"></i> Grid
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Pregunta Existente -->
+                                    <div class="question-item border rounded p-3 mb-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <span class="badge badge-primary me-2">Likert 5</span>
+                                                    <small class="text-muted">Pregunta #1</small>
+                                                </div>
+                                                <h6>¿Qué tan satisfecho está con su trabajo actual?</h6>
+                                                <p class="text-muted small mb-2">Evalúe su nivel de satisfacción general con su puesto de trabajo.</p>
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    <span class="badge badge-secondary">1. Muy insatisfecho</span>
+                                                    <span class="badge badge-secondary">2. Insatisfecho</span>
+                                                    <span class="badge badge-secondary">3. Neutral</span>
+                                                    <span class="badge badge-secondary">4. Satisfecho</span>
+                                                    <span class="badge badge-secondary">5. Muy satisfecho</span>
+                                                </div>
+                                            </div>
+                                            <div class="btn-group-vertical">
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary">
+                                                    <i class="fas fa-arrows-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Formulario de Nueva Pregunta -->
+                                    <div id="question-form" class="question-builder" style="display: none;">
+                                        <h5><i class="fas fa-plus-circle"></i> Nueva Pregunta</h5>
+                                        
+                                        <form id="new-question-form">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Texto de la Pregunta *</label>
+                                                        <textarea class="form-control" name="question_text" rows="2" placeholder="Escriba su pregunta aquí..." required></textarea>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                        <label class="form-label">Descripción/Ayuda (Opcional)</label>
+                                                        <input type="text" class="form-control" name="description" placeholder="Texto adicional para aclarar la pregunta">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Categoría *</label>
+                                                        <select class="form-control" name="category_id" required>
+                                                            <option value="1" selected>Satisfacción Laboral</option>
+                                                            <option value="2">Comunicación</option>
+                                                            <option value="3">Ambiente de Trabajo</option>
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="required">
+                                                        <label class="form-check-label">
+                                                            Pregunta obligatoria
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="form-label">Tipo de Pregunta *</label>
+                                                <div class="question-type-selector">
+                                                    <div class="question-type-card selected" data-type="likert_5">
+                                                        <i class="fas fa-star-half-alt fa-2x mb-2"></i>
+                                                        <h6>Escala Likert 5</h6>
+                                                        <small>1 - 5 puntos</small>
+                                                    </div>
+                                                    <div class="question-type-card" data-type="multiple_choice">
+                                                        <i class="fas fa-list-ul fa-2x mb-2"></i>
+                                                        <h6>Opción Múltiple</h6>
+                                                        <small>Varias opciones</small>
+                                                    </div>
+                                                    <div class="question-type-card" data-type="yes_no">
+                                                        <i class="fas fa-check-double fa-2x mb-2"></i>
+                                                        <h6>Sí/No</h6>
+                                                        <small>Respuesta binaria</small>
+                                                    </div>
+                                                    <div class="question-type-card" data-type="text">
+                                                        <i class="fas fa-edit fa-2x mb-2"></i>
+                                                        <h6>Texto Libre</h6>
+                                                        <small>Respuesta abierta</small>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="question_type" value="likert_5">
+                                            </div>
+                                            
+                                            <div id="options-container">
+                                                <label class="form-label">Opciones de Respuesta</label>
+                                                <div class="row">
+                                                    <div class="col-sm-6 mb-2">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">1</span>
+                                                            <input type="text" class="form-control" value="Totalmente en desacuerdo" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">2</span>
+                                                            <input type="text" class="form-control" value="En desacuerdo" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">3</span>
+                                                            <input type="text" class="form-control" value="Neutral" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">4</span>
+                                                            <input type="text" class="form-control" value="De acuerdo" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">5</span>
+                                                            <input type="text" class="form-control" value="Totalmente de acuerdo" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group text-end">
+                                                <button type="button" class="btn btn-secondary me-2" onclick="cancelQuestion()">
+                                                    <i class="fas fa-times"></i> Cancelar
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fas fa-save"></i> Guardar Pregunta
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    <!-- Empty State -->
+                                    <div class="empty-state" id="empty-questions" style="display: none;">
+                                        <i class="fas fa-question-circle fa-3x"></i>
+                                        <h4>No hay preguntas en esta categoría</h4>
+                                        <p>Comience agregando la primera pregunta</p>
+                                        <button class="btn btn-primary" onclick="showQuestionForm()">
+                                            <i class="fas fa-plus"></i> Agregar Primera Pregunta
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REPORTES VIEW -->
+                <div id="reports-view" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-chart-bar"></i> Reportes de Encuesta</h2>
+                        <div>
+                            <button class="btn btn-outline-success me-2">
+                                <i class="fas fa-file-excel"></i> Exportar Excel
+                            </button>
+                            <button class="btn btn-outline-danger">
+                                <i class="fas fa-file-pdf"></i> Exportar PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Información de la Encuesta -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3>Encuesta de Clima Laboral HERCO 2024</h3>
+                                    <p class="text-muted">Evaluación completa del ambiente laboral</p>
+                                    <p><strong>Período:</strong> 01/03/2024 - 31/03/2024</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <h4 class="text-primary">24</h4>
+                                            <small>Respuestas</small>
+                                        </div>
+                                        <div class="col-6">
+                                            <h4 class="text-success">4.2</h4>
+                                            <small>Promedio General</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficos por Categoría -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-column"></i> Resultados por Categoría</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- Categoría 1 -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="border rounded p-3">
+                                        <h6>Satisfacción Laboral</h6>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="flex-grow-1">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" style="width: 84%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="ms-2 fw-bold">4.2/5</span>
+                                        </div>
+                                        <small class="text-muted">84% de satisfacción promedio</small>
+                                    </div>
+                                </div>
+
+                                <!-- Categoría 2 -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="border rounded p-3">
+                                        <h6>Comunicación y Objetivos</h6>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="flex-grow-1">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-info" style="width: 76%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="ms-2 fw-bold">3.8/5</span>
+                                        </div>
+                                        <small class="text-muted">76% de satisfacción promedio</small>
+                                    </div>
+                                </div>
+
+                                <!-- Categoría 3 -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="border rounded p-3">
+                                        <h6>Ambiente de Trabajo</h6>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="flex-grow-1">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" style="width: 68%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="ms-2 fw-bold">3.4/5</span>
+                                        </div>
+                                        <small class="text-muted">68% de satisfacción promedio</small>
+                                    </div>
+                                </div>
+
+                                <!-- Categoría 4 -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="border rounded p-3">
+                                        <h6>Capacitación y Desarrollo</h6>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="flex-grow-1">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-primary" style="width: 92%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="ms-2 fw-bold">4.6/5</span>
+                                        </div>
+                                        <small class="text-muted">92% de satisfacción promedio</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Análisis Detallado -->
+                    <div class="row mt-4">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-pie"></i> Distribución de Respuestas</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col">
+                                            <div class="border-end">
+                                                <h4 class="text-success">45%</h4>
+                                                <small>Muy Satisfecho</small>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="border-end">
+                                                <h4 class="text-info">30%</h4>
+                                                <small>Satisfecho</small>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="border-end">
+                                                <h4 class="text-warning">15%</h4>
+                                                <small>Neutral</small>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="border-end">
+                                                <h4 class="text-danger">8%</h4>
+                                                <small>Insatisfecho</small>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h4 class="text-dark">2%</h4>
+                                            <small>Muy Insatisfecho</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-building"></i> Por Departamento</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between">
+                                            <small>Administración</small>
+                                            <strong>4.5</strong>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between">
+                                            <small>Operaciones</small>
+                                            <strong>4.1</strong>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 82%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between">
+                                            <small>Ventas</small>
+                                            <strong>3.8</strong>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 76%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navigation
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all views
+                document.querySelectorAll('[id$="-view"]').forEach(view => {
+                    view.style.display = 'none';
+                });
+                
+                // Show target view
+                const target = this.getAttribute('href').substring(1);
+                const viewElement = document.getElementById(target + '-view') || document.getElementById('dashboard-view');
+                viewElement.style.display = 'block';
+            });
+        });
+
+        // Question Builder
+        function showQuestionForm() {
+            document.getElementById('question-form').style.display = 'block';
+        }
+
+        function cancelQuestion() {
+            document.getElementById('question-form').style.display = 'none';
+        }
+
+        // Question type selection
+        document.querySelectorAll('.question-type-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all cards
+                document.querySelectorAll('.question-type-card').forEach(c => c.classList.remove('selected'));
+                
+                // Add selected class to clicked card
+                this.classList.add('selected');
+                
+                // Update hidden input
+                const type = this.dataset.type;
+                document.querySelector('input[name="question_type"]').value = type;
+                
+                // Update options container based on type
+                updateOptionsContainer(type);
+            });
+        });
+
+        function updateOptionsContainer(type) {
+            const container = document.getElementById('options-container');
+            
+            if (type === 'text') {
+                container.innerHTML = '<p class="text-muted"><i class="fas fa-info-circle"></i> Las preguntas de texto libre no requieren opciones predefinidas.</p>';
+            } else if (type === 'yes_no') {
+                container.innerHTML = `
+                    <label class="form-label">Opciones de Respuesta</label>
+                    <div class="row">
+                        <div class="col-sm-6 mb-2">
+                            <div class="input-group">
+                                <span class="input-group-text">1</span>
+                                <input type="text" class="form-control" value="Sí" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-2">
+                            <div class="input-group">
+                                <span class="input-group-text">0</span>
+                                <input type="text" class="form-control" value="No" readonly>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            // Default likert_5 is already set in HTML
+        }
+
+        // Add question button
+        document.getElementById('add-question-btn').addEventListener('click', showQuestionForm);
+
+        // Mobile sidebar toggle
+        document.getElementById('toggle-sidebar')?.addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+
+        // Form submissions
+        document.getElementById('create-survey-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Handle survey creation
+            alert('Encuesta creada exitosamente!');
+            // Redirect to questions builder
+            document.querySelector('a[href="#questions"]').click();
+        });
+
+        document.getElementById('new-question-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Handle question creation
+            alert('Pregunta agregada exitosamente!');
+            cancelQuestion();
+        });
+    </script>
+</body>
+</html>
