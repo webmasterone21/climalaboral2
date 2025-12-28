@@ -1,0 +1,896 @@
+/**
+ * TEMA CORPORATIVO HERCO 2024
+ * 
+ * Estilos específicos para el sistema de clima laboral HERCO
+ * Paleta de colores oficial y componentes personalizados
+ * 
+ * @package HERCO\Assets
+ * @version 2.0
+ * @author Sistema HERCO
+ */
+
+/* ===================================
+   PALETA DE COLORES HERCO 2024
+   =================================== */
+:root {
+    /* Colores principales HERCO */
+    --herco-blue-primary: #2c5aa0;
+    --herco-blue-secondary: #1e3d72;
+    --herco-blue-light: #4a7bc8;
+    --herco-blue-lighter: #7ba7d7;
+    --herco-blue-lightest: #e8f1ff;
+    
+    /* Colores complementarios */
+    --herco-orange: #ff6b35;
+    --herco-orange-light: #ff8c65;
+    --herco-orange-lighter: #ffb598;
+    
+    --herco-green: #2ecc71;
+    --herco-green-light: #58d68d;
+    --herco-green-lighter: #82e5a4;
+    
+    --herco-red: #e74c3c;
+    --herco-red-light: #ec7063;
+    --herco-red-lighter: #f1948a;
+    
+    --herco-yellow: #f39c12;
+    --herco-yellow-light: #f5b041;
+    --herco-yellow-lighter: #f7dc6f;
+    
+    /* Grises corporativos */
+    --herco-gray-50: #f9fafb;
+    --herco-gray-100: #f3f4f6;
+    --herco-gray-200: #e5e7eb;
+    --herco-gray-300: #d1d5db;
+    --herco-gray-400: #9ca3af;
+    --herco-gray-500: #6b7280;
+    --herco-gray-600: #4b5563;
+    --herco-gray-700: #374151;
+    --herco-gray-800: #1f2937;
+    --herco-gray-900: #111827;
+    
+    /* Gradientes corporativos */
+    --herco-gradient-primary: linear-gradient(135deg, var(--herco-blue-primary) 0%, var(--herco-blue-secondary) 100%);
+    --herco-gradient-secondary: linear-gradient(135deg, var(--herco-orange) 0%, var(--herco-yellow) 100%);
+    --herco-gradient-success: linear-gradient(135deg, var(--herco-green) 0%, #27ae60 100%);
+    --herco-gradient-danger: linear-gradient(135deg, var(--herco-red) 0%, #c0392b 100%);
+    --herco-gradient-info: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    --herco-gradient-warning: linear-gradient(135deg, var(--herco-yellow) 0%, #e67e22 100%);
+    
+    /* Gradientes de fondo */
+    --herco-bg-gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --herco-bg-gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --herco-bg-gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --herco-bg-gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    
+    /* Sombras HERCO */
+    --herco-shadow-blue: 0 10px 25px rgba(44, 90, 160, 0.15);
+    --herco-shadow-orange: 0 10px 25px rgba(255, 107, 53, 0.15);
+    --herco-shadow-green: 0 10px 25px rgba(46, 204, 113, 0.15);
+    --herco-shadow-red: 0 10px 25px rgba(231, 76, 60, 0.15);
+}
+
+/* ===================================
+   COMPONENTES HERCO ESPECÍFICOS
+   =================================== */
+
+/* Logo y Branding */
+.herco-logo {
+    height: 40px;
+    filter: brightness(0) invert(1);
+    transition: all 0.3s ease;
+}
+
+.herco-logo:hover {
+    transform: scale(1.05);
+}
+
+.herco-brand-text {
+    background: var(--herco-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+/* ===================================
+   CARDS HERCO 2024
+   =================================== */
+
+/* Tarjeta principal HERCO */
+.herco-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(44, 90, 160, 0.08);
+    border: none;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.herco-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--herco-gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.herco-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--herco-shadow-blue);
+}
+
+.herco-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Tarjetas de categorías de clima laboral */
+.herco-category-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--herco-blue-primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.herco-category-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: var(--herco-blue-lightest);
+    border-radius: 50%;
+    transform: translate(20px, -20px);
+    opacity: 0.5;
+}
+
+.herco-category-card:hover {
+    transform: translateY(-4px);
+    border-left-color: var(--herco-orange);
+    box-shadow: 0 8px 24px rgba(44, 90, 160, 0.12);
+}
+
+.herco-category-card .category-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--herco-gradient-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.herco-category-card .category-title {
+    font-weight: 600;
+    color: var(--herco-gray-800);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.herco-category-card .category-description {
+    color: var(--herco-gray-600);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* ===================================
+   ESTADÍSTICAS HERCO
+   =================================== */
+
+/* Tarjeta de estadística principal */
+.herco-stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.herco-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(44, 90, 160, 0.02) 100%);
+    pointer-events: none;
+}
+
+.herco-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--herco-shadow-blue);
+}
+
+/* Valor principal */
+.herco-stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--herco-blue-primary);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+/* Título de estadística */
+.herco-stat-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--herco-gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+}
+
+/* Cambio/tendencia */
+.herco-stat-change {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.herco-stat-change.positive {
+    color: var(--herco-green);
+}
+
+.herco-stat-change.negative {
+    color: var(--herco-red);
+}
+
+.herco-stat-change.neutral {
+    color: var(--herco-gray-500);
+}
+
+.herco-stat-change i {
+    margin-right: 0.25rem;
+}
+
+/* Icono de estadística */
+.herco-stat-icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    background: var(--herco-blue-lightest);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--herco-blue-primary);
+    font-size: 1.25rem;
+}
+
+/* ===================================
+   GRÁFICOS HERCO
+   =================================== */
+
+/* Contenedor de gráfico */
+.herco-chart-container {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+.herco-chart-container .chart-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--herco-gray-800);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.herco-chart-container .chart-title i {
+    margin-right: 0.75rem;
+    color: var(--herco-blue-primary);
+}
+
+/* Wrapper del canvas */
+.herco-chart-wrapper {
+    position: relative;
+    height: 300px;
+    margin-bottom: 1rem;
+}
+
+/* Leyenda personalizada */
+.herco-chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.herco-chart-legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--herco-gray-600);
+}
+
+.herco-chart-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin-right: 0.5rem;
+}
+
+/* ===================================
+   COLORES PARA GRÁFICOS HERCO
+   =================================== */
+.herco-chart-colors {
+    --chart-color-1: #2c5aa0;    /* Azul principal */
+    --chart-color-2: #ff6b35;    /* Naranja */
+    --chart-color-3: #2ecc71;    /* Verde */
+    --chart-color-4: #e74c3c;    /* Rojo */
+    --chart-color-5: #f39c12;    /* Amarillo */
+    --chart-color-6: #9b59b6;    /* Púrpura */
+    --chart-color-7: #1abc9c;    /* Turquesa */
+    --chart-color-8: #34495e;    /* Gris oscuro */
+    --chart-color-9: #e67e22;    /* Naranja oscuro */
+    --chart-color-10: #3498db;   /* Azul claro */
+    --chart-color-11: #95a5a6;   /* Gris */
+    --chart-color-12: #f1c40f;   /* Amarillo claro */
+    --chart-color-13: #8e44ad;   /* Púrpura oscuro */
+    --chart-color-14: #16a085;   /* Verde azulado */
+    --chart-color-15: #2c3e50;   /* Azul muy oscuro */
+    --chart-color-16: #27ae60;   /* Verde oscuro */
+    --chart-color-17: #c0392b;   /* Rojo oscuro */
+    --chart-color-18: #d35400;   /* Naranja rojizo */
+}
+
+/* ===================================
+   REPORTES HERCO
+   =================================== */
+
+/* Header del reporte */
+.herco-report-header {
+    background: var(--herco-gradient-primary);
+    color: white;
+    padding: 2rem;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.herco-report-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(50px, -50px);
+}
+
+.herco-report-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.herco-report-header .report-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+}
+
+.herco-report-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.herco-report-meta-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.herco-report-meta-item i {
+    margin-right: 0.5rem;
+}
+
+/* Sección del reporte */
+.herco-report-section {
+    background: white;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.herco-report-section-header {
+    background: var(--herco-gray-50);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--herco-gray-200);
+}
+
+.herco-report-section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--herco-gray-800);
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.herco-report-section-title i {
+    margin-right: 0.75rem;
+    color: var(--herco-blue-primary);
+}
+
+.herco-report-section-content {
+    padding: 2rem;
+}
+
+/* ===================================
+   CATEGORÍAS HERCO 2024 (18)
+   =================================== */
+
+/* Colores específicos para cada categoría */
+.category-1 { --category-color: #2c5aa0; } /* Satisfacción Laboral */
+.category-2 { --category-color: #ff6b35; } /* Participación y Autonomía */
+.category-3 { --category-color: #2ecc71; } /* Comunicación y Objetivos */
+.category-4 { --category-color: #e74c3c; } /* Equilibrio y Evaluación */
+.category-5 { --category-color: #f39c12; } /* Distribución y Carga de Trabajo */
+.category-6 { --category-color: #9b59b6; } /* Reconocimiento y Promoción */
+.category-7 { --category-color: #1abc9c; } /* Ambiente de Trabajo */
+.category-8 { --category-color: #34495e; } /* Capacitación */
+.category-9 { --category-color: #e67e22; } /* Tecnología y Recursos */
+.category-10 { --category-color: #3498db; } /* Colaboración y Compañerismo */
+.category-11 { --category-color: #95a5a6; } /* Normativas y Regulaciones */
+.category-12 { --category-color: #f1c40f; } /* Compensación y Beneficios */
+.category-13 { --category-color: #8e44ad; } /* Bienestar y Salud */
+.category-14 { --category-color: #16a085; } /* Seguridad en el Trabajo */
+.category-15 { --category-color: #2c3e50; } /* Información y Comunicación */
+.category-16 { --category-color: #27ae60; } /* Relaciones con Supervisores */
+.category-17 { --category-color: #c0392b; } /* Feedback y Reconocimiento */
+.category-18 { --category-color: #d35400; } /* Diversidad e Inclusión */
+
+/* Aplicar colores a elementos de categoría */
+.herco-category-item {
+    border-left: 4px solid var(--category-color);
+    background: white;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0 8px 8px 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.herco-category-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: var(--category-color);
+    transition: width 0.3s ease;
+    opacity: 0.1;
+}
+
+.herco-category-item:hover::before {
+    width: 100%;
+}
+
+.herco-category-item:hover {
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge de categoría */
+.herco-category-badge {
+    background: var(--category-color);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ===================================
+   ESCALA LIKERT HERCO
+   =================================== */
+
+.herco-likert-scale {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--herco-gray-50);
+    padding: 1rem;
+    border-radius: 12px;
+    margin: 1rem 0;
+}
+
+.herco-likert-option {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.herco-likert-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+
+.herco-likert-option:hover {
+    background: var(--herco-blue-lightest);
+    transform: translateY(-2px);
+}
+
+.herco-likert-option.selected {
+    background: var(--herco-blue-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+}
+
+.herco-likert-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.herco-likert-value {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+/* ===================================
+   PROGRESS BARS HERCO
+   =================================== */
+
+.herco-progress {
+    height: 8px;
+    background: var(--herco-gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.herco-progress-bar {
+    height: 100%;
+    background: var(--herco-gradient-primary);
+    border-radius: 4px;
+    transition: width 0.6s ease;
+    position: relative;
+}
+
+.herco-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Progress con texto */
+.herco-progress-with-text {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.herco-progress-text {
+    min-width: 3rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--herco-gray-700);
+}
+
+/* ===================================
+   BOTONES HERCO
+   =================================== */
+
+.btn-herco-primary {
+    background: var(--herco-gradient-primary);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-herco-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-herco-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--herco-shadow-blue);
+    color: white;
+}
+
+.btn-herco-primary:hover::before {
+    left: 100%;
+}
+
+.btn-herco-secondary {
+    background: var(--herco-gradient-secondary);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-herco-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--herco-shadow-orange);
+    color: white;
+}
+
+.btn-herco-outline {
+    border: 2px solid var(--herco-blue-primary);
+    color: var(--herco-blue-primary);
+    background: transparent;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-herco-outline:hover {
+    background: var(--herco-blue-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--herco-shadow-blue);
+}
+
+/* ===================================
+   ANIMACIONES HERCO
+   =================================== */
+
+@keyframes hercoFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hercoSlideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes hercoSlideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes hercoScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes hercoPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Clases de animación */
+.herco-fade-in-up {
+    animation: hercoFadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.herco-slide-in-left {
+    animation: hercoSlideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.herco-slide-in-right {
+    animation: hercoSlideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.herco-scale {
+    animation: hercoScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.herco-pulse {
+    animation: hercoPulse 2s infinite;
+}
+
+/* Delays para animaciones secuenciales */
+.herco-delay-1 { animation-delay: 0.1s; }
+.herco-delay-2 { animation-delay: 0.2s; }
+.herco-delay-3 { animation-delay: 0.3s; }
+.herco-delay-4 { animation-delay: 0.4s; }
+.herco-delay-5 { animation-delay: 0.5s; }
+
+/* ===================================
+   RESPONSIVE HERCO
+   =================================== */
+
+@media (max-width: 768px) {
+    .herco-stat-card {
+        padding: 1.5rem;
+    }
+    
+    .herco-stat-value {
+        font-size: 2rem;
+    }
+    
+    .herco-chart-container {
+        padding: 1.5rem;
+    }
+    
+    .herco-chart-wrapper {
+        height: 250px;
+    }
+    
+    .herco-report-header {
+        padding: 1.5rem;
+    }
+    
+    .herco-report-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .herco-likert-scale {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .herco-likert-option {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .herco-category-card {
+        padding: 1rem;
+    }
+    
+    .herco-category-card .category-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+    
+    .herco-report-section-content {
+        padding: 1.5rem;
+    }
+    
+    .herco-chart-legend {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===================================
+   IMPRESIÓN HERCO
+   =================================== */
+
+@media print {
+    .herco-card,
+    .herco-stat-card,
+    .herco-chart-container {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        break-inside: avoid;
+    }
+    
+    .herco-report-header {
+        background: #f8f9fa !important;
+        color: #333 !important;
+    }
+    
+    .herco-gradient-primary,
+    .herco-gradient-secondary {
+        background: #2c5aa0 !important;
+    }
+    
+    .herco-chart-wrapper {
+        height: 300px !important;
+    }
+}
+
+/* ===================================
+   UTILIDADES HERCO
+   =================================== */
+
+.herco-text-primary { color: var(--herco-blue-primary) !important; }
+.herco-text-secondary { color: var(--herco-orange) !important; }
+.herco-text-success { color: var(--herco-green) !important; }
+.herco-text-danger { color: var(--herco-red) !important; }
+.herco-text-warning { color: var(--herco-yellow) !important; }
+
+.herco-bg-primary { background-color: var(--herco-blue-primary) !important; }
+.herco-bg-secondary { background-color: var(--herco-orange) !important; }
+.herco-bg-light { background-color: var(--herco-gray-50) !important; }
+
+.herco-border-primary { border-color: var(--herco-blue-primary) !important; }
+.herco-border-secondary { border-color: var(--herco-orange) !important; }
+
+.herco-gradient-text {
+    background: var(--herco-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}

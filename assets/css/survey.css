@@ -1,0 +1,1344 @@
+/**
+ * Estilos para Encuestas Públicas - Sistema HERCO v2.0
+ * 
+ * CSS moderno y responsive para la interfaz pública de encuestas
+ * con tema HERCO 2024, animaciones fluidas y accesibilidad
+ * 
+ * @package HERCO\Assets\CSS
+ * @version 2.0.0
+ * @author Sistema HERCO
+ */
+
+/* ============================================
+   VARIABLES CSS - TEMA HERCO 2024
+   ============================================ */
+
+:root {
+    /* Colores principales HERCO */
+    --herco-primary: #667eea;
+    --herco-secondary: #764ba2;
+    --herco-accent: #f093fb;
+    --herco-success: #28a745;
+    --herco-warning: #ffc107;
+    --herco-danger: #dc3545;
+    --herco-info: #17a2b8;
+    
+    /* Gradientes HERCO */
+    --herco-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --herco-gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --herco-gradient-success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    --herco-gradient-warning: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+    
+    /* Sombras */
+    --herco-shadow-sm: 0 2px 4px rgba(102, 126, 234, 0.1);
+    --herco-shadow-md: 0 4px 12px rgba(102, 126, 234, 0.15);
+    --herco-shadow-lg: 0 8px 25px rgba(102, 126, 234, 0.2);
+    --herco-shadow-xl: 0 15px 35px rgba(102, 126, 234, 0.25);
+    
+    /* Colores de fondo */
+    --herco-bg-primary: #f8f9fc;
+    --herco-bg-secondary: #ffffff;
+    --herco-bg-muted: #6c757d;
+    
+    /* Tipografía */
+    --herco-font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --herco-font-weight-light: 300;
+    --herco-font-weight-normal: 400;
+    --herco-font-weight-medium: 500;
+    --herco-font-weight-semibold: 600;
+    --herco-font-weight-bold: 700;
+    
+    /* Espaciado */
+    --herco-border-radius: 12px;
+    --herco-border-radius-lg: 16px;
+    --herco-border-radius-xl: 20px;
+    
+    /* Transiciones */
+    --herco-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --herco-transition-fast: all 0.15s ease-out;
+    --herco-transition-slow: all 0.5s ease-in-out;
+    
+    /* Breakpoints */
+    --herco-breakpoint-sm: 576px;
+    --herco-breakpoint-md: 768px;
+    --herco-breakpoint-lg: 992px;
+    --herco-breakpoint-xl: 1200px;
+}
+
+/* ============================================
+   RESET Y BASE
+   ============================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body.survey-page {
+    font-family: var(--herco-font-family);
+    font-weight: var(--herco-font-weight-normal);
+    line-height: 1.6;
+    color: #2d3748;
+    background: var(--herco-gradient-primary);
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.survey-page ::selection {
+    background: var(--herco-accent);
+    color: white;
+}
+
+/* ============================================
+   CONTENEDOR PRINCIPAL DE ENCUESTA
+   ============================================ */
+
+.survey-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+
+.survey-container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ============================================
+   TARJETA PRINCIPAL DE ENCUESTA
+   ============================================ */
+
+.survey-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: var(--herco-border-radius-xl);
+    box-shadow: var(--herco-shadow-xl);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    max-width: 800px;
+    overflow: hidden;
+    position: relative;
+    animation: surveyCardEntrance 0.8s ease-out;
+}
+
+@keyframes surveyCardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   HEADER DE LA ENCUESTA
+   ============================================ */
+
+.survey-header {
+    background: var(--herco-gradient-primary);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.survey-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: backgroundMove 20s linear infinite;
+}
+
+@keyframes backgroundMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(20px, 20px); }
+}
+
+.survey-title {
+    font-size: 1.8rem;
+    font-weight: var(--herco-font-weight-bold);
+    margin: 0 0 10px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.survey-description {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.survey-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+.survey-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+/* ============================================
+   INDICADOR DE PROGRESO
+   ============================================ */
+
+.progress-container {
+    background: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.progress-text {
+    font-weight: var(--herco-font-weight-medium);
+    color: #4a5568;
+    font-size: 0.95rem;
+}
+
+.progress-percentage {
+    font-weight: var(--herco-font-weight-bold);
+    color: var(--herco-primary);
+    font-size: 1rem;
+}
+
+.progress-bar-container {
+    background: #e2e8f0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    background: var(--herco-gradient-primary);
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ============================================
+   CONTENEDOR DE PREGUNTAS
+   ============================================ */
+
+.questions-container {
+    padding: 40px 30px;
+    min-height: 400px;
+    position: relative;
+}
+
+.question-card {
+    display: none;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: var(--herco-transition);
+}
+
+.question-card.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.question-card.editing {
+    border-left: 4px solid var(--herco-primary);
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.question-header {
+    margin-bottom: 25px;
+}
+
+.question-number {
+    display: inline-block;
+    background: var(--herco-gradient-primary);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: var(--herco-font-weight-semibold);
+    margin-bottom: 15px;
+}
+
+.question-title {
+    font-size: 1.4rem;
+    font-weight: var(--herco-font-weight-semibold);
+    color: #2d3748;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+}
+
+.question-description {
+    color: #718096;
+    font-size: 1rem;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+
+.question-required {
+    color: var(--herco-danger);
+    font-size: 0.9rem;
+    font-weight: var(--herco-font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+/* ============================================
+   TIPOS DE RESPUESTA - LIKERT
+   ============================================ */
+
+.likert-container {
+    background: #f7fafc;
+    border-radius: var(--herco-border-radius);
+    padding: 25px;
+    border: 1px solid #e2e8f0;
+}
+
+.likert-scale {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.likert-option {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+}
+
+.likert-option input[type="radio"] {
+    display: none;
+}
+
+.likert-option label {
+    display: block;
+    padding: 15px 8px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--herco-border-radius);
+    cursor: pointer;
+    transition: var(--herco-transition);
+    font-weight: var(--herco-font-weight-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.likert-option label::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--herco-gradient-primary);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.likert-option label:hover {
+    border-color: var(--herco-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--herco-shadow-md);
+}
+
+.likert-option input[type="radio"]:checked + label {
+    background: var(--herco-primary);
+    color: white;
+    border-color: var(--herco-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--herco-shadow-md);
+}
+
+.likert-option input[type="radio"]:checked + label::before {
+    left: 0;
+}
+
+.likert-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #718096;
+}
+
+/* ============================================
+   TIPOS DE RESPUESTA - OPCIONES MÚLTIPLES
+   ============================================ */
+
+.options-container {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.option-item {
+    position: relative;
+}
+
+.option-item input[type="radio"],
+.option-item input[type="checkbox"] {
+    display: none;
+}
+
+.option-item label {
+    display: block;
+    padding: 18px 20px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--herco-border-radius);
+    cursor: pointer;
+    transition: var(--herco-transition);
+    position: relative;
+    font-weight: var(--herco-font-weight-medium);
+}
+
+.option-item label::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #cbd5e0;
+    border-radius: 50%;
+    transition: var(--herco-transition);
+}
+
+.option-item input[type="checkbox"] + label::before {
+    border-radius: 4px;
+}
+
+.option-item label::after {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.option-item input[type="checkbox"] + label::after {
+    content: '✓';
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    width: 12px;
+    height: 12px;
+}
+
+.option-item label {
+    padding-left: 55px;
+}
+
+.option-item:hover label {
+    border-color: var(--herco-primary);
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.option-item input:checked + label {
+    border-color: var(--herco-primary);
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.option-item input:checked + label::before {
+    background: var(--herco-primary);
+    border-color: var(--herco-primary);
+}
+
+.option-item input:checked + label::after {
+    transform: translateY(-50%) scale(1);
+}
+
+/* ============================================
+   TIPOS DE RESPUESTA - CAMPOS DE TEXTO
+   ============================================ */
+
+.text-input-container {
+    margin-top: 20px;
+}
+
+.text-input,
+.textarea-input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--herco-border-radius);
+    font-size: 1rem;
+    font-family: var(--herco-font-family);
+    transition: var(--herco-transition);
+    background: white;
+    resize: vertical;
+}
+
+.text-input:focus,
+.textarea-input:focus {
+    outline: none;
+    border-color: var(--herco-primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.textarea-input {
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.character-counter {
+    text-align: right;
+    font-size: 0.85rem;
+    color: #718096;
+    margin-top: 8px;
+}
+
+.character-counter.warning {
+    color: var(--herco-warning);
+}
+
+.character-counter.danger {
+    color: var(--herco-danger);
+}
+
+/* ============================================
+   TIPOS DE RESPUESTA - CALIFICACIÓN
+   ============================================ */
+
+.rating-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.rating-stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.rating-star {
+    font-size: 2.5rem;
+    color: #e2e8f0;
+    cursor: pointer;
+    transition: var(--herco-transition);
+    position: relative;
+}
+
+.rating-star:hover,
+.rating-star.active {
+    color: #ffd700;
+    transform: scale(1.1);
+}
+
+.rating-star:hover::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.rating-value {
+    font-size: 1.2rem;
+    font-weight: var(--herco-font-weight-bold);
+    color: var(--herco-primary);
+}
+
+/* ============================================
+   TIPOS DE RESPUESTA - DESLIZADOR
+   ============================================ */
+
+.slider-container {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: var(--herco-border-radius);
+}
+
+.slider-input {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #e2e8f0;
+    outline: none;
+    appearance: none;
+    margin: 20px 0;
+}
+
+.slider-input::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--herco-gradient-primary);
+    cursor: pointer;
+    box-shadow: var(--herco-shadow-md);
+    transition: var(--herco-transition);
+}
+
+.slider-input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: var(--herco-shadow-lg);
+}
+
+.slider-input::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--herco-gradient-primary);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--herco-shadow-md);
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.slider-value {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: var(--herco-font-weight-bold);
+    color: var(--herco-primary);
+    margin-top: 15px;
+}
+
+/* ============================================
+   TIPOS DE RESPUESTA - NPS
+   ============================================ */
+
+.nps-container {
+    background: #f7fafc;
+    border-radius: var(--herco-border-radius);
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.nps-scale {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.nps-option {
+    flex: 1;
+    min-width: 40px;
+}
+
+.nps-option input[type="radio"] {
+    display: none;
+}
+
+.nps-option label {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--herco-transition);
+    font-weight: var(--herco-font-weight-bold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.nps-option:hover label {
+    border-color: var(--herco-primary);
+    transform: translateY(-2px);
+}
+
+.nps-option input[type="radio"]:checked + label {
+    background: var(--herco-primary);
+    color: white;
+    border-color: var(--herco-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--herco-shadow-md);
+}
+
+.nps-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #718096;
+    font-weight: var(--herco-font-weight-medium);
+}
+
+/* ============================================
+   TIPOS DE RESPUESTA - ARCHIVOS
+   ============================================ */
+
+.file-upload-container {
+    margin-top: 20px;
+}
+
+.file-upload-area {
+    border: 2px dashed #cbd5e0;
+    border-radius: var(--herco-border-radius);
+    padding: 40px 20px;
+    text-align: center;
+    background: #f7fafc;
+    transition: var(--herco-transition);
+    cursor: pointer;
+    position: relative;
+}
+
+.file-upload-area:hover {
+    border-color: var(--herco-primary);
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.file-upload-area.dragover {
+    border-color: var(--herco-primary);
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.file-upload-icon {
+    font-size: 3rem;
+    color: #cbd5e0;
+    margin-bottom: 15px;
+}
+
+.file-upload-text {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+.file-upload-hint {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-selected {
+    background: rgba(40, 167, 69, 0.05);
+    border-color: var(--herco-success);
+    color: var(--herco-success);
+}
+
+/* ============================================
+   NAVEGACIÓN
+   ============================================ */
+
+.navigation-container {
+    background: white;
+    padding: 25px 30px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--herco-border-radius);
+    font-weight: var(--herco-font-weight-semibold);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--herco-transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.nav-button-secondary {
+    background: #f7fafc;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
+}
+
+.nav-button-secondary:hover:not(:disabled) {
+    background: #edf2f7;
+    transform: translateY(-1px);
+    box-shadow: var(--herco-shadow-sm);
+}
+
+.nav-button-primary {
+    background: var(--herco-gradient-primary);
+    color: white;
+}
+
+.nav-button-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--herco-shadow-md);
+}
+
+.nav-button-success {
+    background: var(--herco-gradient-success);
+    color: white;
+}
+
+.nav-button-success:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--herco-shadow-md);
+}
+
+/* ============================================
+   VALIDACIÓN Y ERRORES
+   ============================================ */
+
+.validation-errors {
+    margin-top: 15px;
+}
+
+.validation-error {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--herco-danger);
+    padding: 12px 16px;
+    border-radius: var(--herco-border-radius);
+    border-left: 4px solid var(--herco-danger);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    animation: errorSlideIn 0.3s ease-out;
+}
+
+@keyframes errorSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.question-card.has-error {
+    border-left: 4px solid var(--herco-danger);
+}
+
+.question-card.has-error .question-title {
+    color: var(--herco-danger);
+}
+
+.is-invalid {
+    border-color: var(--herco-danger) !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1) !important;
+}
+
+/* ============================================
+   INDICADORES DE ESTADO
+   ============================================ */
+
+.save-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: var(--herco-font-weight-medium);
+    display: none;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--herco-shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.save-indicator.saving {
+    color: var(--herco-warning);
+    display: flex;
+}
+
+.save-indicator.saved {
+    color: var(--herco-success);
+    display: flex;
+}
+
+.save-indicator.error {
+    color: var(--herco-danger);
+    display: flex;
+}
+
+.time-remaining {
+    background: rgba(255, 193, 7, 0.1);
+    color: #856404;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: var(--herco-font-weight-medium);
+}
+
+/* ============================================
+   OVERLAYS Y MODALES
+   ============================================ */
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: overlayFadeIn 0.3s ease-out;
+}
+
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.loading-content {
+    background: white;
+    padding: 40px;
+    border-radius: var(--herco-border-radius-lg);
+    text-align: center;
+    box-shadow: var(--herco-shadow-xl);
+    max-width: 400px;
+}
+
+.loading-content .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+.notification-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    max-width: 400px;
+    border-radius: var(--herco-border-radius);
+    box-shadow: var(--herco-shadow-lg);
+    border: none;
+    backdrop-filter: blur(10px);
+}
+
+/* ============================================
+   ESTADO VACÍO Y PLACEHOLDERS
+   ============================================ */
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #718096;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    color: #cbd5e0;
+    margin-bottom: 20px;
+}
+
+.empty-state-title {
+    font-size: 1.5rem;
+    font-weight: var(--herco-font-weight-semibold);
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+.empty-state-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   ANIMACIONES ESPECIALES
+   ============================================ */
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.bounce-animation {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% { transform: translate3d(0, 0, 0); }
+    40%, 43% { transform: translate3d(0, -8px, 0); }
+    70% { transform: translate3d(0, -4px, 0); }
+    90% { transform: translate3d(0, -2px, 0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-out-left {
+    animation: slideOutLeft 0.3s ease-in;
+}
+
+@keyframes slideOutLeft {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-50px); }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .survey-container {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+    
+    .survey-card {
+        border-radius: var(--herco-border-radius);
+    }
+    
+    .survey-header {
+        padding: 20px;
+    }
+    
+    .survey-title {
+        font-size: 1.5rem;
+    }
+    
+    .survey-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .progress-container,
+    .questions-container,
+    .navigation-container {
+        padding: 20px;
+    }
+    
+    .question-title {
+        font-size: 1.2rem;
+    }
+    
+    .likert-scale {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .likert-option {
+        min-width: 100%;
+    }
+    
+    .nps-scale {
+        gap: 4px;
+    }
+    
+    .nps-option label {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .navigation-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-button {
+        width: 100%;
+    }
+    
+    .save-indicator {
+        top: 10px;
+        right: 10px;
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .survey-container {
+        padding: 5px;
+    }
+    
+    .survey-header,
+    .progress-container,
+    .questions-container,
+    .navigation-container {
+        padding: 15px;
+    }
+    
+    .question-title {
+        font-size: 1.1rem;
+    }
+    
+    .likert-option label {
+        padding: 12px 6px;
+        font-size: 0.9rem;
+    }
+    
+    .option-item label {
+        padding: 15px 15px 15px 50px;
+    }
+    
+    .rating-stars {
+        gap: 4px;
+    }
+    
+    .rating-star {
+        font-size: 2rem;
+    }
+}
+
+/* ============================================
+   MODO OSCURO (OPCIONAL)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+    .survey-page.auto-dark {
+        background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+        color: #e2e8f0;
+    }
+    
+    .auto-dark .survey-card {
+        background: rgba(45, 55, 72, 0.95);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .auto-dark .question-title {
+        color: #e2e8f0;
+    }
+    
+    .auto-dark .text-input,
+    .auto-dark .textarea-input {
+        background: #4a5568;
+        border-color: #718096;
+        color: #e2e8f0;
+    }
+    
+    .auto-dark .likert-option label,
+    .auto-dark .option-item label {
+        background: #4a5568;
+        border-color: #718096;
+        color: #e2e8f0;
+    }
+    
+    .auto-dark .progress-container,
+    .auto-dark .navigation-container {
+        background: #2d3748;
+        border-color: #4a5568;
+    }
+}
+
+/* ============================================
+   ACCESIBILIDAD
+   ============================================ */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.focus-visible {
+    outline: 2px solid var(--herco-primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+
+.text-gradient {
+    background: var(--herco-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.herco-shadow {
+    box-shadow: var(--herco-shadow-md);
+}
+
+.herco-shadow-lg {
+    box-shadow: var(--herco-shadow-lg);
+}
+
+.herco-border-radius {
+    border-radius: var(--herco-border-radius);
+}
+
+.herco-transition {
+    transition: var(--herco-transition);
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+    .survey-page {
+        background: white !important;
+    }
+    
+    .survey-container::before {
+        display: none;
+    }
+    
+    .survey-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .navigation-container,
+    .save-indicator,
+    .loading-overlay {
+        display: none !important;
+    }
+    
+    .question-card {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    
+    .progress-container {
+        border-bottom: 1px solid #ccc;
+    }
+}
